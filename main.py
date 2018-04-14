@@ -62,6 +62,53 @@ for ch in allConvexHulls:
 imgConvexHulls3To10 = np.zeros_like(imgCanny)
 cv2.drawContours(imgConvexHulls3To10, convexHull3To10, -1, (255, 255, 255), 2)
 
+#imgTrafficCones
+
+def convexHullPointingUp(ch):
+    pointsAboveCenter, poinstBelowCenter = [], []
+
+    x, y, w, h = cv2.boundingRect(ch)
+    aspectRatio = w / h
+
+    if aspectRatio < 0.8:
+        verticalCenter = y + h / 2
+
+        for point in ch:
+            if point[0][1] < verticalCenter:
+                pointsAboveCenter.append(point)
+            elif point[0][1] >= verticalCenter:
+                poinstBelowCenter.append(point)
+
+        leftX = poinstBelowCenter[0][0][0]
+        rightX = poinstBelowCenter[0][0][0]
+        for point in poinstBelowCenter:
+            if point[0][0] < leftX:
+                leftX = point[0][0]
+            if point[0][0] > rightX:
+                rightX = point[0][0]
+
+        for point in pointsAboveCenter:
+            if (point[0][0] < leftX) or (point[0][0] > rightX):
+                return False
+
+    else:
+        return False
+
+    return True
+
+cones = []
+boundingBoxes = []
+
+for ch in convexHull3To10:
+    if convexHullPointingUp(ch):
+        cones.append(ch)
+        rect = cv2.boundingRect(ch)
+        boundingBoxes.append(rect)
+
+imgTrafficCones = np.zeros_like(imgCanny)
+cv2.drawContours(imgTrafficCones, cones, -1, (255, 255, 255), 2)
+#cv2.drawContours(imgTrafficCones, boundingBoxes, -1, (1, 255, 1), 2)
+
 #Image scaling
 imgOriginalSmall = cv2.resize(imgOriginal, (0, 0), fx=0.5, fy=0.5)
 imgHSVSmall = cv2.resize(imgHSV, (0, 0), fx=0.5, fy=0.5)
@@ -73,6 +120,7 @@ imgCannySmall = cv2.resize(imgCanny, (0, 0), fx=0.5, fy=0.5)
 imgContoursSmall = cv2.resize(imgContours, (0, 0), fx=0.5, fy=0.5)
 imgAllConvexHullsSmall = cv2.resize(imgAllConvexHulls, (0, 0), fx=0.5, fy=0.5)
 imgConvexHulls3To10Small = cv2.resize(imgConvexHulls3To10, (0, 0), fx=0.5, fy=0.5)
+imgTrafficConesSmall = cv2.resize(imgTrafficCones, (0, 0), fx=0.5, fy=0.5)
 
 #Image displaying
 cv2.imshow('imgOriginal', imgOriginalSmall)
@@ -85,5 +133,6 @@ cv2.imshow('imgCanny', imgCannySmall)
 cv2.imshow('imgContours', imgContoursSmall)
 cv2.imshow('imgAllConvexHulls', imgAllConvexHullsSmall)
 cv2.imshow('imgConvexHulls3To10', imgConvexHulls3To10Small)
+cv2.imshow('imgTrafficCones', imgTrafficConesSmall)
 
 cv2.waitKey()
