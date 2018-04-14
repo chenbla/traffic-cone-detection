@@ -5,7 +5,8 @@ class RGBHistogram:
         self.bins = bins
 
     def describe(selfs, image, mask = None):
-        hist = cv2.calcHist([image], [0, 1, 2], mask, self.bins, [0, 256, 0, 256, 0, 256])
+        hist = cv2.calcHist([image], [0, 1, 2],
+                            mask, self.bins, [0, 256, 0, 256, 0, 256])
         cv2.normalize(hist, hist)
 
         return hist.flatten()
