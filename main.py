@@ -36,7 +36,14 @@ imgContours = np.zeros_like(imgCanny)
 cv2.drawContours(imgContours, contours, -1, (255, 255, 255), 1)
 
 #_____imgAllConvexHulls
+approx_contours = []
 
+for c in contours:
+    approx = cv2.approxPolyDP(c, 10, closed=True)
+    approx_contours.append(approx)
+
+img_approx_contours = np.zeros_like(imgCanny)
+cv2.drawContours(img_approx_contours, approx_contours, -1, (255, 255, 255), 1)
 
 #Image scaling
 imgOriginalSmall = cv2.resize(imgOriginal, (0, 0), fx=0.5, fy=0.5)
@@ -47,6 +54,7 @@ imgThreshSmall = cv2.resize(imgThresh, (0, 0), fx=0.5, fy=0.5)
 imgThreshSmoothedSmall = cv2.resize(imgThreshSmoothed, (0, 0), fx=0.5, fy=0.5)
 imgCannySmall = cv2.resize(imgCanny, (0, 0), fx=0.5, fy=0.5)
 imgContoursSmall = cv2.resize(imgContours, (0, 0), fx=0.5, fy=0.5)
+img_approx_contoursSmall = cv2.resize(img_approx_contours, (0, 0), fx=0.5, fy=0.5)
 
 #Image displaying
 cv2.imshow('imgOriginal', imgOriginalSmall)
@@ -57,5 +65,6 @@ cv2.imshow('imgThresh', imgThreshSmall)
 cv2.imshow('imgThreshSmoothed', imgThreshSmoothedSmall)
 cv2.imshow('imgCanny', imgCannySmall)
 cv2.imshow('imgContours', imgContoursSmall)
+cv2.imshow('img_approx_contours', img_approx_contoursSmall)
 
 cv2.waitKey()
