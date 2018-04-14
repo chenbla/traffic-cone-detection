@@ -59,5 +59,3 @@ cv2.imshow('imgCanny', imgCannySmall)
 cv2.imshow('imgContours', imgContoursSmall)
 
 cv2.waitKey()
-
-#3. GitHub/PyCharm Entegrasyon Denemesi
