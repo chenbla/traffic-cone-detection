@@ -21,7 +21,6 @@ imgThreshHigh = cv2.inRange(imgHSV, lowerRed, upperRed)
 imgThresh = cv2.add(imgThreshLow, imgThreshHigh)
 
 #_____imgThreshSmoothed
-#Erode(), Dilate(), SmoothGaussian()
 kernel = np.ones((3, 3), np.uint8)
 imgEroded = cv2.erode(imgThresh, kernel, iterations=1)
 imgDilated = cv2.dilate(imgEroded, kernel, iterations=1)
@@ -35,14 +34,33 @@ _, contours, _ = cv2.findContours(np.array(imgCanny), cv2.RETR_EXTERNAL, cv2.CHA
 img_Contours = np.zeros_like(imgCanny)
 cv2.drawContours(img_Contours, contours, -1, (255, 255, 255), 1)
 
-approx_contours = []
+approxContours = []
 
 for c in contours:
     approx = cv2.approxPolyDP(c, 10, closed=True)
-    approx_contours.append(approx)
+    approxContours.append(approx)
 
 imgContours = np.zeros_like(imgCanny)
-cv2.drawContours(imgContours, approx_contours, -1, (255, 255, 255), 1)
+cv2.drawContours(imgContours, approxContours, -1, (255, 255, 255), 1)
+
+#_____imgAllConvexHulls
+allConvexHulls = []
+
+for ac in approxContours:
+    allConvexHulls.append(cv2.convexHull(ac))
+
+imgAllConvexHulls = np.zeros_like(imgCanny)
+cv2.drawContours(imgAllConvexHulls, allConvexHulls, -1, (255, 255, 255), 2)
+
+#_____imgConvexHulls3To10
+convexHull3To10 = []
+
+for ch in allConvexHulls:
+    if 3 <= len(ch) <= 10:
+        convexHull3To10.append(cv2.convexHull(ch))
+
+imgConvexHulls3To10 = np.zeros_like(imgCanny)
+cv2.drawContours(imgConvexHulls3To10, convexHull3To10, -1, (255, 255, 255), 2)
 
 #Image scaling
 imgOriginalSmall = cv2.resize(imgOriginal, (0, 0), fx=0.5, fy=0.5)
@@ -53,6 +71,8 @@ imgThreshSmall = cv2.resize(imgThresh, (0, 0), fx=0.5, fy=0.5)
 imgThreshSmoothedSmall = cv2.resize(imgThreshSmoothed, (0, 0), fx=0.5, fy=0.5)
 imgCannySmall = cv2.resize(imgCanny, (0, 0), fx=0.5, fy=0.5)
 imgContoursSmall = cv2.resize(imgContours, (0, 0), fx=0.5, fy=0.5)
+imgAllConvexHullsSmall = cv2.resize(imgAllConvexHulls, (0, 0), fx=0.5, fy=0.5)
+imgConvexHulls3To10Small = cv2.resize(imgConvexHulls3To10, (0, 0), fx=0.5, fy=0.5)
 
 #Image displaying
 cv2.imshow('imgOriginal', imgOriginalSmall)
@@ -63,5 +83,7 @@ cv2.imshow('imgThresh', imgThreshSmall)
 cv2.imshow('imgThreshSmoothed', imgThreshSmoothedSmall)
 cv2.imshow('imgCanny', imgCannySmall)
 cv2.imshow('imgContours', imgContoursSmall)
+cv2.imshow('imgAllConvexHulls', imgAllConvexHullsSmall)
+cv2.imshow('imgConvexHulls3To10', imgConvexHulls3To10Small)
 
 cv2.waitKey()
