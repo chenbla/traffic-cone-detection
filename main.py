@@ -97,17 +97,21 @@ def convexHullPointingUp(ch):
     return True
 
 cones = []
-boundingBoxes = []
+bounding_Rects = []
 
 for ch in convexHull3To10:
     if convexHullPointingUp(ch):
         cones.append(ch)
         rect = cv2.boundingRect(ch)
-        boundingBoxes.append(rect)
+        bounding_Rects.append(rect)
 
 imgTrafficCones = np.zeros_like(imgCanny)
 cv2.drawContours(imgTrafficCones, cones, -1, (255, 255, 255), 2)
-#cv2.drawContours(imgTrafficCones, boundingBoxes, -1, (1, 255, 1), 2)
+#cv2.drawContours(imgTrafficCones, bounding_Rects, -1, (0, 0, 255), 2),
+
+#imgTrafficConesWithOverlapsRemoved
+imgTrafficConesWithOverlapsRemoved = imgOriginal.copy()
+cv2.drawContours(imgTrafficConesWithOverlapsRemoved, cones, -1, (255, 255, 255), 2)
 
 #Image scaling
 imgOriginalSmall = cv2.resize(imgOriginal, (0, 0), fx=0.5, fy=0.5)
@@ -121,6 +125,7 @@ imgContoursSmall = cv2.resize(imgContours, (0, 0), fx=0.5, fy=0.5)
 imgAllConvexHullsSmall = cv2.resize(imgAllConvexHulls, (0, 0), fx=0.5, fy=0.5)
 imgConvexHulls3To10Small = cv2.resize(imgConvexHulls3To10, (0, 0), fx=0.5, fy=0.5)
 imgTrafficConesSmall = cv2.resize(imgTrafficCones, (0, 0), fx=0.5, fy=0.5)
+imgTrafficConesWithOverlapsRemovedSmall = cv2.resize(imgTrafficConesWithOverlapsRemoved, (0, 0), fx=0.5, fy=0.5)
 
 #Image displaying
 cv2.imshow('imgOriginal', imgOriginalSmall)
@@ -134,5 +139,6 @@ cv2.imshow('imgContours', imgContoursSmall)
 cv2.imshow('imgAllConvexHulls', imgAllConvexHullsSmall)
 cv2.imshow('imgConvexHulls3To10', imgConvexHulls3To10Small)
 cv2.imshow('imgTrafficCones', imgTrafficConesSmall)
+cv2.imshow('imgTrafficConesWithOverlapsRemoved', imgTrafficConesWithOverlapsRemovedSmall)
 
 cv2.waitKey()
