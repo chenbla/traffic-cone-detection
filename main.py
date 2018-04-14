@@ -113,7 +113,7 @@ imgTrafficConesWithOverlapsRemoved = imgOriginal.copy()
 #cv2.drawContours(imgTrafficConesWithOverlapsRemoved, cones, -1, (255, 255, 255), 2)
 
 for rect in bounding_Rects:
-    cv2.rectangle(imgTrafficConesWithOverlapsRemoved, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (1, 255, 1), 3)
+    cv2.rectangle(imgTrafficConesWithOverlapsRemoved, (rect[0], rect[1]), (rect[0]+rect[2], rect[1]+rect[3]), (1, 255, 1), 2)
 
 #Image scaling
 imgOriginalSmall = cv2.resize(imgOriginal, (0, 0), fx=0.5, fy=0.5)
