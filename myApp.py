@@ -10,6 +10,10 @@ master.resizable(0, 0)
 c = Canvas(master, bg="blue", height=720, width=720)
 c.pack()
 
+img = ImageTk.PhotoImage(Image.open(path))
+panel = Label(master, image = img)
+panel.pack(side="bottom", fill="both", expand="yes")
+
 def callback():
     path = tkFileDialog.askopenfilename()
     e.delete(0, END)  # Remove current text in entry
