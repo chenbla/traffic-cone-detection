@@ -17,7 +17,7 @@ w = Label(master, text="File Path:")
 e = Entry(master, text="")
 b = Button(master, text="Browse", command=callback)
 
-im = Image.open("/home/porteon/Documents/Tez/Images/test1.jpeg")
+im = Image.open(FPATH.read())
 photo = ImageTk.PhotoImage(im)
 cv = Canvas()
 cv.pack(side="top", fill="both", expand="yes")
