@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 #_____imgOriginal
-imgOriginal = cv2.imread('/home/porteon/Documents/Tez/Images/image1.png')
+imgOriginal = cv2.imread('/home/porteon/Documents/Tez/Samples/image15.png')
 
 #_____imgHSV
 imgHSV = cv2.cvtColor(imgOriginal, cv2.COLOR_BGR2HSV)
@@ -142,5 +142,18 @@ cv2.imshow('imgAllConvexHulls', imgAllConvexHullsSmall)
 cv2.imshow('imgConvexHulls3To10', imgConvexHulls3To10Small)
 cv2.imshow('imgTrafficCones', imgTrafficConesSmall)
 cv2.imshow('imgTrafficConesWithOverlapsRemoved', imgTrafficConesWithOverlapsRemovedSmall)
+
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgOriginal.png', imgOriginalSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgHSV.png', imgHSVSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgThreshLow.png', imgThreshLowSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgThreshHigh.png', imgThreshHighSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgThresh.png', imgThreshSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgThreshSmoothed.png', imgThreshSmoothedSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgCanny.png', imgCannySmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgContours.png', imgContoursSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgAllConvexHulls.png', imgAllConvexHullsSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgConvexHulls3To10.png', imgConvexHulls3To10Small)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgTrafficCones.png', imgTrafficConesSmall)
+# cv2.imwrite('/home/porteon/Documents/Tez/ImagesFromCV/imgTrafficConesWithOverlapsRemoved.png', imgTrafficConesWithOverlapsRemovedSmall)
 
 cv2.waitKey()
