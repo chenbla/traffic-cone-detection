@@ -1,10 +1,6 @@
 import cv2
 import numpy as np
 
-# this is the cascade we just made. Call what you want
-# watch_cascade = cv2.CascadeClassifier(
-#     '/home/porteon/Documents/Tez/opencv-haar-classifier-training-master/trained_classifiers/cascade.xml')
-
 faceCascade = cv2.CascadeClassifier('/home/porteon/Documents/Tez/cascade.xml')
 
 img = cv2.imread('/home/porteon/Documents/Tez/Images/cones/img04.jpg')
@@ -20,4 +16,3 @@ for (x, y, w, h) in deneme:
 cv2.imshow('img', img)
 # cv2.imshow('gray', gray)
 cv2.waitKey()
-
